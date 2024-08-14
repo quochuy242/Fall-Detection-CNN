@@ -37,12 +37,14 @@ class VGG(nn.Module):
             nn.Linear(4096, output_dim),
         )
 
+
     def forward(self, x):
         x = self.features(x)
         x = self.avgpool(x)
         h = x.view(x.shape[0], -1)
         x = self.classifier(h)
         return x, h
+
 
 
 def get_vgg_layers(config, batch_norm):
@@ -64,69 +66,38 @@ def get_vgg_layers(config, batch_norm):
     return nn.Sequential(*layers)
 
 
+
 if __name__ == "main":
+    
     vgg_layers, models = [], {}
 
-    vgg11_config = [64, "M", 128, "M", 256, 256, "M", 512, 512, "M", 512, 512, "M"]
+    vgg11_config = [
+        64, "M", 
+        128, "M", 
+        256, 256, "M", 
+        512, 512, "M", 
+        512, 512, "M"
+    ]
     vgg13_config = [
-        64,
-        64,
-        "M",
-        128,
-        128,
-        "M",
-        256,
-        256,
-        "M",
-        512,
-        512,
-        "M",
-        512,
-        512,
-        "M",
+        64, 64, "M", 
+        128, 128, "M", 
+        256, 256, "M", 
+        512, 512, "M", 
+        512, 512, "M"
     ]
     vgg16_config = [
-        64,
-        64,
-        "M",
-        128,
-        128,
-        "M",
-        256,
-        256,
-        256,
-        "M",
-        512,
-        512,
-        512,
-        "M",
-        512,
-        512,
-        512,
-        "M",
+        64, 64, "M",
+        128, 128, "M",
+        256, 256, 256, "M",
+        512, 512, 512, "M",
+        512, 512, 512, "M"
     ]
     vgg19_config = [
-        64,
-        64,
-        "M",
-        128,
-        128,
-        "M",
-        256,
-        256,
-        256,
-        256,
-        "M",
-        512,
-        512,
-        512,
-        512,
-        "M",
-        512,
-        512,
-        512,
-        512,
-        "M",
+        64, 64, "M",
+        128, 128, "M",
+        256, 256, 256, 256, "M",
+        512, 512, 512, 512, "M",
+        512, 512, 512, 512, "M",
     ]
 
     for vgg, key, pre_trained_model in zip(
